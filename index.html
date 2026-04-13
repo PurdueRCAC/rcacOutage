@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-mode="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>RCAC — Scheduled Maintenance</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Apply saved dark mode preference before paint to prevent flash -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('site-mode');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-mode', 'dark');
+      } else if (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-mode', 'dark');
+      }
+    }());
+  </script>
+</head>
+
+<body data-mode="light">
+
+  <header id="site-header">
+    <div class="header-inner">
+      <div class="purdue-branding">
+        <div class="navbar-logo">
+          <a href="https://www.purdue.edu" class="logo-link" aria-label="Purdue University">
+            <img src="images/purdue-logo.svg" alt="" class="pu-logo logo-dark" aria-hidden="true" width="182"
+              height="33" />
+          </a>
+        </div>
+        <div class="department">
+          <a href="https://www.rcac.purdue.edu" class="dept-link" aria-label="Rosen Center for Advanced Computing">
+            Rosen Center for <span class="tagline">Advanced Computing</span>
+          </a>
+        </div>
+      </div>
+      <button id="site-mode-toggle" type="button" aria-label="Toggle dark mode">
+        <span class="icon-sun" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+        </span>
+        <span class="icon-moon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section id="status-banner" aria-labelledby="banner-heading">
+      <div class="banner-inner">
+        <div class="banner-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor">
+            <path
+              d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z" />
+          </svg>
+        </div>
+        <h1 id="banner-heading"></h1>
+        <div id="countdown-display" class="countdown" aria-live="polite" aria-atomic="true"></div>
+        <p class="downtime-window">
+          <span id="downtime-start-label"></span>
+          <span class="downtime-sep"> &mdash; </span>
+          <span id="downtime-end-label"></span>
+        </p>
+        <p id="banner-message" class="banner-message"></p>
+      </div>
+    </section>
+
+    <div class="content-wrapper">
+
+      <section id="news-section" class="card" aria-labelledby="news-title">
+        <h2 id="news-title"></h2>
+        <div id="news-body"></div>
+      </section>
+
+      <section id="contact-section" class="card" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contact Us</h2>
+        <ul class="contact-list">
+          <li id="contact-email-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path
+                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+            </svg>
+            <a id="contact-email-link" href="" title="Email"></a>
+          </li>
+          <li id="contact-phone-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path
+                d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+            </svg>
+            <a id="contact-phone-link" href="" title="Phone Number"></a>
+          </li>
+          <li id="status-url-item">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+            </svg>
+            <a id="status-url-link" href="" target="_blank" rel="noopener noreferrer">System Status</a>
+          </li>
+        </ul>
+      </section>
+
+      <section id="contact-section" class="card" aria-labelledby="contact-title">
+        <h2 id="contact-title">Follow Us</h2>
+        <div id="social-links" class="social-links">
+          <a id="social-twitter" href="" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+          <a id="social-instagram" href="" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+            </svg>
+          </a>
+          <a id="social-facebook" href="" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+          </a>
+          <a id="social-linkedin" href="" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+          <a id="social-youtube" href="" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+              <path
+                d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer id="site-footer">
+    <div class="footer-inner">
+      <p id="footer-text"></p>
+      <p id="footer-copyright">Copyright &copy; <span id="footer-year"></span> Purdue University. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
