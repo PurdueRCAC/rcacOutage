@@ -905,6 +905,7 @@
 
       ctx   = canvas.getContext('2d');
       audio = new Pacman.Audio({ soundDisabled: soundDisabled });
+      window.rcacGameAudio = audio; // Store reference for later cleanup
       map   = new Pacman.Map(blockSize);
       user  = new Pacman.User({ completedLevel: completedLevel, eatenPill: eatenPill }, map);
 
@@ -944,7 +945,19 @@
       timer = window.setInterval(mainLoop, 1000 / Pacman.FPS);
     }
 
-    return { init: init };
+    function pauseGame() {
+      if (state === PLAYING || state === COUNTDOWN) {
+        stored = state;
+        setState(PAUSE);
+        if (audio) { audio.pause(); }
+        map.draw(ctx);
+        dialog('Paused');
+      } else if (audio) {
+        audio.pause();
+      }
+    }
+
+    return { init: init, pauseGame: pauseGame };
   }());
 
   /* ── KEY map ────────────────────────────────────────────── */
@@ -1042,6 +1055,10 @@
     }
     gameInitialized = true;
     window.setTimeout(function () { PACMAN.init(wrapper, './'); }, 0);
+  };
+
+  window.rcacGameStop = function () {
+    PACMAN.pauseGame();
   };
 
 }());

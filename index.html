@@ -7,6 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>RCAC — Scheduled Maintenance</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/tron.css" />
   <!-- Apply saved dark mode preference before paint to prevent flash -->
   <script>
     (function () {
@@ -88,8 +89,18 @@
         <div id="news-body"></div>
         <div id="game-launch-bar" style="display:none">
           <button id="game-launch-btn" type="button">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:middle;margin-right:0.4em"><path d="M8 5v14l11-7z"/></svg>
-            Play RCAC Job Runner
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"
+              style="vertical-align:middle;margin-right:0.4em">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Play PACMAN Job Runner
+          </button>
+          <button id="tron-launch-btn" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"
+              style="vertical-align:middle;margin-right:0.4em">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Play TRON Light Cycle
           </button>
         </div>
       </section>
@@ -99,6 +110,15 @@
           <button id="game-back-btn" type="button">&#8592; Back to Announcement</button>
         </div>
         <div id="game-canvas-wrapper"></div>
+      </section>
+
+      <section id="tron-section" class="card game-card" aria-label="TRON Light Cycle" style="display:none">
+        <div id="tron-container">
+          <div class="tron-back-bar">
+            <button id="tron-back-btn" type="button">&#8592; Back to Announcement</button>
+          </div>
+          <div class="game-area" id="gameArea"></div>
+        </div>
       </section>
 
       <section id="contact-section" class="card" aria-labelledby="contact-title">
@@ -178,6 +198,7 @@
   <script src="config.js"></script>
   <script src="js/main.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/tron.js"></script>
 </body>
 
 </html>

@@ -69,28 +69,46 @@ window.MAINTENANCE_CONFIG = {
   // You can add or remove entries freely — levels beyond the list just continue without a reveal.
   RCAC_CLUSTERS: [
     {
-      name: "Cluster Name",
-      year: "20XX",
-      specs: "N nodes · X cores · Y GB RAM per node",
-      fact: "One memorable sentence about this system."
+      name: "Hammer",
+      year: "2015",
+      specs: "198 nodes · 20 cores · 64 GB RAM per node",
+      fact: "Hammer will be expanded annually, with each year's purchase of nodes to remain in production for 5 years from their initial purchase."
     },
     {
-      name: "Cluster Name",
-      year: "20XX",
-      specs: "N nodes · X cores · Y GB RAM per node",
-      fact: "One memorable sentence about this system."
+      name: "Anvil",
+      year: "2021",
+      specs: "1000 nodes · 128 cores · 256GB to 1TB RAM per node · 100 Gbps Infiniband interconnects",
+      fact: "Anvil is funded under NSF award number 2005632. Carol Song is the principal investigator and project director."
     },
     {
-      name: "Cluster Name",
-      year: "20XX",
-      specs: "N nodes · X cores · Y GB RAM per node",
-      fact: "One memorable sentence about this system."
+      name: "Gilbreth",
+      year: "2021",
+      specs: "52 nodes · 64 cores · 192GB to 2TB RAM per node · 2 A100(80GB) GPU per node",
+      fact: "Gilbreth is named in honor of Lillian Moller Gilbreth, Purdue's first female engineering professor."
     },
     {
-      name: "Halcyon",
-      year: "20XX",
-      specs: "N nodes · X cores · Y GB RAM per node",
-      fact: "RCAC's newest and most powerful cluster to date."
+      name: "Geddes",
+      year: "2022",
+      specs: "4 nodes · 128 cores · 24TB RAM per node · 2 A100(512GB) GPU per node",
+      fact: "Geddes is named in honor of Lanelle Geddes, Professor of Nursing."
+    },
+    {
+      name: "Negishi",
+      year: "2022",
+      specs: "8 nodes · 128 cores · 512 GB RAM per node",
+      fact: "Negishi is named in honor of Dr. Ei-ichi Negishi, the Herbert C. Brown Distinguished Professor in the Department of Chemistry at Purdue."
+    },
+    {
+      name: "Gautschi",
+      year: "2024",
+      specs: "8 nodes · 192 cores · 768 GB RAM per node",
+      fact: "Gautschi is named in honor of Dr. Walter Gautschi, the Professor in the Department of Computer Science and Mathematics at Purdue."
+    },
+    {
+      name: "Rossmann",
+      year: "2025",
+      specs: "2 nodes · 128 cores · 768 GB RAM per node",
+      fact: "Rossmann is a Community Cluster optimized for communities running applications subject to heightened security requirements such as data subject to the NIH Genomic Data Sharing (GDS) policy, licensed data, or healthcare data."
     },
   ],
 };

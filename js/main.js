@@ -53,8 +53,11 @@
     if (cfg.showGame) {
       var launchBar = el('game-launch-bar');
       var launchBtn = el('game-launch-btn');
+      var tronBtn   = el('tron-launch-btn');
       var backBtn   = el('game-back-btn');
+      var tronBackBtn = el('tron-back-btn');
       var gameSection = el('game-section');
+      var tronSection = el('tron-section');
       var newsSection = el('news-section');
 
       if (launchBar) launchBar.style.display = '';
@@ -67,10 +70,27 @@
         });
       }
 
+      if (tronBtn) {
+        tronBtn.addEventListener('click', function () {
+          if (newsSection) newsSection.style.display = 'none';
+          if (tronSection) tronSection.style.display = '';
+          if (window.tronGameStart) { window.tronGameStart(); }
+        });
+      }
+
       if (backBtn) {
         backBtn.addEventListener('click', function () {
+          if (window.rcacGameStop) { window.rcacGameStop(); }
           if (gameSection) gameSection.style.display = 'none';
           if (newsSection) newsSection.style.display = '';
+        });
+      }
+
+      if (tronBackBtn) {
+        tronBackBtn.addEventListener('click', function () {
+          if (tronSection) tronSection.style.display = 'none';
+          if (newsSection) newsSection.style.display = '';
+          if (window.tronGameStop) { window.tronGameStop(); }
         });
       }
     }

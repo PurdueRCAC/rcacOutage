@@ -1,19 +1,21 @@
-# RCAC Job Runner — Developer Guide
+# RCAC Games — Developer Guide
 
-This document covers the architecture of `js/game.js`, how the game integrates with the maintenance page, and how to extend or replace it.
+This document covers the architecture of both arcade games built into the maintenance page, how they integrate with the page structure, and how to extend or add games.
 
 ---
 
 ## File overview
 
 | File | Role |
-|---|---|
-| `index.html` | Declares the `#news-section` / `#game-section` swap structure and loads scripts |
+[|-----|------|]
+| `index.html` | Declares the `#news-section` / game section swap structure and loads all scripts |
 | `config.js` | Single source of truth — `showGame` flag + `RCAC_CLUSTERS` array |
-| `js/main.js` | Wires the launch/back buttons; calls `window.rcacGameStart()` on click |
+| `js/main.js` | Wires all launch/back buttons; calls `window.rcacGameStart()` and `window.tronGameStart()` |
 | `js/game.js` | Self-contained Pac-Man engine + HPC skin + cluster reveal system |
+| `js/tron.js` | TRON Light Cycle engine — DOM-based, fullscreen |
 | `css/style.css` | Game card, back bar, and launch button styles |
-| `audio/` | Six audio files in both `.ogg` and `.mp3` formats |
+| `css/tron.css` | TRON-specific fullscreen layout and animation styles |
+| `audio/` | Six audio files in both `.ogg` and `.mp3` formats (Pac-Man only) |
 
 The page has zero build dependencies. Everything runs from a static file server or a local `file://` URL.
 
@@ -28,7 +30,7 @@ The page has zero build dependencies. Everything runs from a static file server 
 3. `window.rcacGameStart()` (exported by `game.js`) checks the `gameInitialized` flag to prevent double-init, then calls `PACMAN.init(wrapper, './')` via a `setTimeout(fn, 0)` to yield to layout before sizing the canvas.
 4. The back button reverses the swap. The game is not destroyed — it keeps running in the background, which is intentional (the player can return to the game).
 
-```
+```text
 showGame: true
   → launch button visible
     → click → news hidden / game visible → rcacGameStart()
@@ -43,7 +45,7 @@ The engine is a self-invoking function that exposes nothing to the global scope 
 
 ### Module structure (top to bottom in `game.js`)
 
-```
+```text
 Constants (NONE, UP, DOWN, LEFT, RIGHT, WAITING, PLAYING, …, CLUSTER_REVEAL)
 Utilities  (deepClone, wrapText)
 Pacman.Ghost    constructor
@@ -62,7 +64,7 @@ Bootstrap       window.rcacGameStart
 The `PACMAN` controller tracks a single `state` variable. Valid states:
 
 | Constant | Value | Description |
-|---|---|---|
+[|---------|-------|-------------|]
 | `WAITING` | 5 | After death or game start — shows instructions overlay |
 | `PAUSE` | 6 | Player pressed P — game loop still ticks but no movement |
 | `PLAYING` | 7 | Normal gameplay |
@@ -129,6 +131,7 @@ if (eaten === 182) { game.completedLevel(); }
 Four ghosts are created at init with colours `['#FF0000', '#00FFDE', '#FFB8DE', '#FFB847']` (OOM Killer, Zombie Process, Segfault, Timeout). Each ghost is an independent closure (no shared mutable state). Ghost names are purely visual — they appear only in the user guide.
 
 Ghosts move at different speeds depending on state:
+
 - Normal: 2 units/tick
 - Vulnerable (after GPU Boost): 1 unit/tick
 - Hidden/returning (after being eaten): 4 units/tick
@@ -152,6 +155,7 @@ The overlay is dismissed by any keypress (handled in `keyDown`) or the auto-dism
 `Pacman.Audio` is a minimal wrapper around the HTML5 `<audio>` element. It loads files sequentially (not in parallel) to avoid race conditions on slow connections.
 
 Each file is loaded with three safety nets:
+
 - `canplaythrough` event
 - `error` event (proceeds even if the file is missing)
 - 3-second `setTimeout` fallback
@@ -167,7 +171,7 @@ var ext = audioEl.canPlayType('audio/ogg; codecs="vorbis"') ? 'ogg' : 'mp3';
 Both formats must be present. The six required files:
 
 | Key | Filename stem | Triggered when |
-|---|---|---|
+[|----|---------------|----------------|]
 | `start` | `opening_song` | New level countdown starts |
 | `die` | `die` | Player is caught by a dangerous ghost |
 | `eatghost` | `eatghost` | Player eats a vulnerable ghost |
@@ -182,6 +186,7 @@ Sound toggle is stored in `localStorage['soundDisabled']` so the preference pers
 The canvas is `blockSize * 19` wide and `blockSize * 22 + 50` tall. The extra 50px is the footer.
 
 `drawFooter()` draws two rows:
+
 - Row 1 (y = mazeBottom + 18): Pac-Man slot icons, Core-Hours score, Level counter, `[S] Sound: ON/OFF` indicator
 - Row 2 (y = mazeBottom + 38): Arrow/key hint text
 
@@ -281,9 +286,97 @@ The `max-width: 100%` rule on `#game-canvas-wrapper canvas` prevents horizontal 
 
 ## Dependencies
 
-None. The game requires only:
+None. The Pac-Man game requires only:
 
 - A modern browser with HTML5 Canvas support (`canvas.getContext('2d')`)
 - The `audio/` folder with the six sound files in `.ogg` and `.mp3` formats
 
 No CDN, no npm, no build step.
+
+---
+
+## TRON Light Cycle — architecture
+
+The TRON game is architecturally different from the Pac-Man game: it renders with **DOM elements** rather than a canvas, and it takes over the **full browser viewport** rather than a fixed-width card.
+
+### Rendering approach
+
+Each grid cell is a `10px × 10px` `<div>`. The player trail, AI trail, barriers, and light cycles are all individual positioned `<div>` elements inside `#gameArea`. This makes the visual effects (shatter fragments, spark particles, shockwave rings) straightforward CSS animations on dynamically created elements.
+
+No `<canvas>` is used. There is no pixel buffer — layout is delegated entirely to the browser.
+
+### Fullscreen layout
+
+`css/tron.css` overrides the `.card` layout for `#tron-section`:
+
+```css
+#tron-section {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100vh;
+    z-index: 10000;
+}
+```
+
+This covers the entire viewport above everything else. The back button bar (`.tron-back-bar`) is a fixed strip at the top of `#tron-container`, and `#gameArea` fills the remaining height below it.
+
+Grid dimensions are calculated from `#gameArea` pixel dimensions at start time:
+
+```javascript
+let gameWidth  = Math.floor(gameArea.offsetWidth  / gridSize);  // gridSize = 10
+let gameHeight = Math.floor(gameArea.offsetHeight / gridSize);
+```
+
+Fallbacks of 80 × 50 apply if the element has not yet been painted.
+
+### Tron: Game loop
+
+```javascript
+let gameInterval = setInterval(gameLoop, gameSpeed);  // gameSpeed starts at 30 ms
+```
+
+`gameLoop` runs every `gameSpeed` ms. It:
+
+1. Calculates the next position for both the player and AI.
+2. Runs collision detection (boundaries, own trail, AI trail, barriers, head-on, cut-off).
+3. Marks trails in the `grid` 2D array (`2` = player, `3` = AI).
+4. Appends trail `<div>` elements to `#gameArea`.
+5. Updates scores and triggers visual effects as needed.
+
+When the AI is defeated, `clearInterval` / `setInterval` restarts the loop at the reduced `gameSpeed` (min 10 ms).
+
+### AI behaviour
+
+The AI makes decisions inside `makeAIDecision()` each tick:
+
+- **Emergency turn**: if the next cell is blocked, pick the direction with the most open space (35% chance of random suboptimal choice instead).
+- **Random impulse**: 5% chance per tick to turn to a random valid direction regardless of need.
+- **Periodic turn**: every 0.5–2 seconds (random interval), 55% chance to reassess — either random direction or toward the player.
+
+This intentional imperfection keeps the AI beatable while still providing challenge.
+
+### Lifecycle functions
+
+| Function | Purpose |
+| --- | --- |
+| `window.tronGameStart()` | Full init — clears `#gameArea`, resets all state, starts the loop |
+| `window.tronGameStop()` | Clears the interval, removes the `keydown` listener, nulls `window.tronGameState` |
+
+`tronGameStart` calls `tronGameStop` at the top, so calling it again (e.g. after game over) is safe — it cleans up the previous run first.
+
+`main.js` calls `tronGameStop` when the back button is clicked to halt the loop before hiding the section.
+
+### Visual effects
+
+All effects are created as temporary `<div>` elements appended to `#gameArea` and removed via `setTimeout` after their animation completes.
+
+| Effect | Trigger | Duration |
+| --- | --- | --- |
+| Cycle shatter (12 fragments + 8 sparks) | Either cycle destroyed | 1500 ms |
+| Shockwave ring | Cycle destroyed or speed increase | 500 ms |
+| Screen flash | Cycle destroyed or speed increase | 150–200 ms |
+| Afterburner particle burst (12 particles) | Speed increases after AI defeat | 600 ms |
+
+### No audio, no config fields
+
+The TRON game has no sound effects and does not read from `RCAC_CLUSTERS`. It is always available whenever `showGame: true` is set in `config.js`. There is no separate toggle.
