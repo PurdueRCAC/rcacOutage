@@ -224,9 +224,53 @@ When the "completed" state is reached, the countdown stops updating on its own. 
 
 ---
 
+## Deployment (technical staff only)
+
+The maintenance page is served from `/data/nginx/html/` on the production server. A deploy script and cron job handle syncing changes from the repository automatically.
+
+### Connecting to the server
+
+SSH into the server using your Purdue username:
+
+```bash
+ssh <username>@web-outage.rcac.purdue.edu
+```
+
+### One-time setup
+
+Run this once on the server to install the deploy script at `/usr/local/bin/rcacoutage-deploy` and register the cron job:
+
+```bash
+sudo /data/nginx/html/setup_rcacoutage_deploy.sh
+```
+
+### Manual deploy
+
+To push changes immediately without waiting for the cron job:
+
+```bash
+sudo /usr/local/bin/rcacoutage-deploy
+```
+
+### Verify the cron job
+
+The cron job runs every minute. To confirm it is installed:
+
+```bash
+sudo cat /etc/cron.d/rcacoutage-deploy
+```
+
+### Watch deploy logs
+
+```bash
+sudo tail -f /var/log/rcacoutage-deploy.log
+```
+
+---
+
 ## Taking the page down after maintenance
 
-The maintenance page is hosted on a separate server. When maintenance is complete, the RCAC team's normal process for switching traffic back to the main site should be followed. Simply updating `config.js` does not take the page offline — that requires a separate hosting step handled by technical staff.
+When maintenance is complete, the RCAC team's normal process for switching traffic back to the main site should be followed. Simply updating `config.js` does not take the page offline — that requires a separate hosting step handled by technical staff.
 
 ---
 

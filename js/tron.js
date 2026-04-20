@@ -33,7 +33,8 @@ window.tronGameStart = function() {
     // Player light cycle properties
     let cycleX = Math.floor(gameWidth / 4);
     let cycleY = Math.floor(gameHeight / 2);
-    let direction = 'right'; // current direction
+    let direction = 'right';
+    let committedDirection = 'right'; // direction used in the last tick — keydown validates against this
     let score = 0;
     let gameRunning = true;
     let gameSpeed = 30; // Starting speed (ms between moves) - fast and exciting!
@@ -916,22 +917,22 @@ window.tronGameStart = function() {
             case 'ArrowUp':
             case 'w':
             case 'W':
-                if (direction !== 'down') direction = 'up';
+                if (committedDirection !== 'down') direction = 'up';
                 break;
             case 'ArrowDown':
             case 's':
             case 'S':
-                if (direction !== 'up') direction = 'down';
+                if (committedDirection !== 'up') direction = 'down';
                 break;
             case 'ArrowLeft':
             case 'a':
             case 'A':
-                if (direction !== 'right') direction = 'left';
+                if (committedDirection !== 'right') direction = 'left';
                 break;
             case 'ArrowRight':
             case 'd':
             case 'D':
-                if (direction !== 'left') direction = 'right';
+                if (committedDirection !== 'left') direction = 'right';
                 break;
         }
     };
@@ -941,6 +942,9 @@ window.tronGameStart = function() {
     // Game loop
     function gameLoop() {
         if (!gameRunning) return;
+
+        // Lock in the direction used this tick so keydown validation stays consistent
+        committedDirection = direction;
 
         // ===== CALCULATE NEXT POSITIONS FIRST =====
         // Calculate player next position

@@ -209,7 +209,11 @@ html[data-mode="dark"] #site-mode-toggle .icon-moon {
 
 .banner-icon {
   color: var(--pu-gold);
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 #banner-heading {
@@ -232,9 +236,8 @@ html[data-mode="dark"] #site-mode-toggle .icon-moon {
 }
 
 .downtime-window {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: var(--banner-subtext);
-  margin-bottom: 1.25rem;
 }
 
 .banner-message {
