@@ -86,6 +86,19 @@
       <section id="news-section" class="card" aria-labelledby="news-title">
         <h2 id="news-title"></h2>
         <div id="news-body"></div>
+        <div id="game-launch-bar" style="display:none">
+          <button id="game-launch-btn" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" style="vertical-align:middle;margin-right:0.4em"><path d="M8 5v14l11-7z"/></svg>
+            Play RCAC Job Runner
+          </button>
+        </div>
+      </section>
+
+      <section id="game-section" class="card game-card" aria-label="RCAC Job Runner" style="display:none">
+        <div id="game-back-bar">
+          <button id="game-back-btn" type="button">&#8592; Back to Announcement</button>
+        </div>
+        <div id="game-canvas-wrapper"></div>
       </section>
 
       <section id="contact-section" class="card" aria-labelledby="contact-title">
@@ -115,8 +128,8 @@
         </ul>
       </section>
 
-      <section id="contact-section" class="card" aria-labelledby="contact-title">
-        <h2 id="contact-title">Follow Us</h2>
+      <section id="socials-section" class="card" aria-labelledby="socials-title">
+        <h2 id="socials-title">Follow Us</h2>
         <div id="social-links" class="social-links">
           <a id="social-twitter" href="" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
@@ -164,6 +177,7 @@
 
   <script src="config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/game.js"></script>
 </body>
 
 </html>

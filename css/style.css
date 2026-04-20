@@ -359,6 +359,83 @@ html[data-mode="dark"] #site-mode-toggle .icon-moon {
   gap: 0.25rem;
 }
 
+/* --- Game Launch Button --- */
+#game-launch-bar {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+#game-launch-btn {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--pu-gold);
+  color: #1c1c1c;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.55rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+#game-launch-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+#game-launch-btn:active {
+  transform: translateY(0);
+}
+
+/* --- Game Back Bar --- */
+#game-back-bar {
+  background: #000;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(207, 185, 145, 0.25);
+}
+
+#game-back-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--radius);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-family: var(--font);
+  padding: 0.25rem 0.65rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+#game-back-btn:hover {
+  border-color: #cfb991;
+  background-color: rgba(207, 185, 145, 0.12);
+  color: #cfb991;
+}
+
+/* --- Game Card --- */
+.game-card {
+  padding: 0;
+  overflow: hidden;
+  background-color: #000;
+  border-color: var(--pu-gold);
+}
+
+#game-canvas-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #000;
+}
+
+#game-canvas-wrapper canvas {
+  display: block;
+  max-width: 100%;
+}
+
 /* --- Responsive --- */
 @media (max-width: 600px) {
   #banner-heading {

@@ -49,6 +49,32 @@
       hide('contact-phone-item');
     }
 
+    // Wire game launch / back buttons when showGame is enabled
+    if (cfg.showGame) {
+      var launchBar = el('game-launch-bar');
+      var launchBtn = el('game-launch-btn');
+      var backBtn   = el('game-back-btn');
+      var gameSection = el('game-section');
+      var newsSection = el('news-section');
+
+      if (launchBar) launchBar.style.display = '';
+
+      if (launchBtn) {
+        launchBtn.addEventListener('click', function () {
+          if (newsSection) newsSection.style.display = 'none';
+          if (gameSection) gameSection.style.display = '';
+          if (window.rcacGameStart) { window.rcacGameStart(); }
+        });
+      }
+
+      if (backBtn) {
+        backBtn.addEventListener('click', function () {
+          if (gameSection) gameSection.style.display = 'none';
+          if (newsSection) newsSection.style.display = '';
+        });
+      }
+    }
+
     if (cfg.statusUrl) {
       setAttr('status-url-link', 'href', cfg.statusUrl);
     } else {

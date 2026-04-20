@@ -58,4 +58,39 @@ window.MAINTENANCE_CONFIG = {
 
   // Footer copyright line
   footerText: "Purdue University is an equal access/equal opportunity university.",
+
+  // ── Game ─────────────────────────────────────────────────
+  // Set to true to show the RCAC Job Runner game instead of the news/announcement card.
+  showGame: true,
+
+  // RCAC cluster history — one entry per Pac-Man level.
+  // Completing level 1 reveals RCAC_CLUSTERS[0], level 2 reveals RCAC_CLUSTERS[1], etc.
+  // Colleagues: fill in name, year, specs, and fact for each cluster.
+  // You can add or remove entries freely — levels beyond the list just continue without a reveal.
+  RCAC_CLUSTERS: [
+    {
+      name: "Cluster Name",
+      year: "20XX",
+      specs: "N nodes · X cores · Y GB RAM per node",
+      fact: "One memorable sentence about this system."
+    },
+    {
+      name: "Cluster Name",
+      year: "20XX",
+      specs: "N nodes · X cores · Y GB RAM per node",
+      fact: "One memorable sentence about this system."
+    },
+    {
+      name: "Cluster Name",
+      year: "20XX",
+      specs: "N nodes · X cores · Y GB RAM per node",
+      fact: "One memorable sentence about this system."
+    },
+    {
+      name: "Halcyon",
+      year: "20XX",
+      specs: "N nodes · X cores · Y GB RAM per node",
+      fact: "RCAC's newest and most powerful cluster to date."
+    },
+  ],
 };
