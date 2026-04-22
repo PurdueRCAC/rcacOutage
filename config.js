@@ -61,7 +61,7 @@ window.MAINTENANCE_CONFIG = {
 
   // ── Game ─────────────────────────────────────────────────
   // Set to true to show the RCAC Job Runner game instead of the news/announcement card.
-  showGame: true,
+  showGame: false,
 
   // RCAC cluster history — one entry per Pac-Man level.
   // Completing level 1 reveals RCAC_CLUSTERS[0], level 2 reveals RCAC_CLUSTERS[1], etc.
