@@ -268,6 +268,58 @@ sudo tail -f /var/log/rcacoutage-deploy.log
 
 ---
 
+## Versioning
+
+Each maintenance window is tagged in Git so the exact state of the page can be recovered at any time.
+
+### Tagging a release
+
+After all changes for a maintenance window are committed to `master`:
+
+```bash
+git tag -a v<N> -m "Version <N> — <Month Year> maintenance window"
+git push origin v<N>
+```
+
+Replace `<N>` with the version number (e.g. `v1.0`, `v2.0`) and the message with the relevant window description.
+
+### Preparing for the next version
+
+After tagging, create a development branch for future work:
+
+```bash
+git checkout -b v<N+1>-dev
+```
+
+Make all changes for the next window on that branch. When the next window arrives:
+
+```bash
+git checkout master
+git merge v<N+1>-dev
+git tag -a v<N+1> -m "Version <N+1> — <Month Year> maintenance window"
+git push origin master v<N+1>
+```
+
+### Viewing all versions
+
+```bash
+git tag
+```
+
+### Checking out a previous version
+
+```bash
+git checkout v<N>
+```
+
+To return to the latest:
+
+```bash
+git checkout master
+```
+
+---
+
 ## Taking the page down after maintenance
 
 When maintenance is complete, the RCAC team's normal process for switching traffic back to the main site should be followed. Simply updating `config.js` does not take the page offline — that requires a separate hosting step handled by technical staff.
